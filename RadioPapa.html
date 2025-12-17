@@ -323,19 +323,27 @@ function fetchNowPlaying() {
           const title = data.title || '-';
           const artist = data.artist || '';
 
-          document.getElementById('trackTitle').textContent = title;
-          document.getElementById('trackArtist').textContent = artist;
-
-          if (!data.cover || title.toLowerCase() === '-') {
-            document.getElementById('albumArt').src = 'https://papaimediacentrum.hu/img/radiologo2.png';
-          } else {
+          // Update only if we got valid data
+          if (title !== '-') {
+            document.getElementById('trackTitle').textContent = title;
+            document.getElementById('trackArtist').textContent = artist;
             document.getElementById('albumArt').src = data.cover;
           }
+
+          //document.getElementById('trackTitle').textContent = title;
+          //document.getElementById('trackArtist').textContent = artist;
+
+          //if (!data.cover || title.toLowerCase() === '-') {
+          //  document.getElementById('albumArt').src = 'https://papaimediacentrum.hu/img/radiologo2.png';
+          //} else {
+          //  document.getElementById('albumArt').src = data.cover;
+          //}
         })
         .catch(() => {
-          document.getElementById('trackTitle').textContent = 'Nincs adat';
-          document.getElementById('trackArtist').textContent = '';
-          document.getElementById('albumArt').src = 'https://papaimediacentrum.hu/img/radiologo2.png';
+          setTimeout(fetchNowPlaying, 5000); // retry after 5s
+          //document.getElementById('trackTitle').textContent = 'Nincs adat';
+          //document.getElementById('trackArtist').textContent = '';
+          //document.getElementById('albumArt').src = 'https://papaimediacentrum.hu/img/radiologo2.png';
         });
     }
 

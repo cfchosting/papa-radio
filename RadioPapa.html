@@ -324,15 +324,18 @@ function fetchNowPlaying() {
           return response.json();
         })
         .then(data => {
-          const title = data.title || '-';
-          const artist = data.artist || '';
+          //const title = data.title || '-';
+          //const artist = data.artist || '';
+          const title = data.title !== undefined && data.title !== '' ? data.title : document.getElementById('trackTitle').textContent;
+          const artist = data.artist !== undefined ? data.artist : document.getElementById('trackArtist').textContent;
+
 
           // Update only if we got valid data
-          if (title !== '-') {
+          //if (title !== '-') {
             document.getElementById('trackTitle').textContent = title;
             document.getElementById('trackArtist').textContent = artist;
             document.getElementById('albumArt').src = data.cover;
-          }
+          //}
 
           //document.getElementById('trackTitle').textContent = title;
           //document.getElementById('trackArtist').textContent = artist;

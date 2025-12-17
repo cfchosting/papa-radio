@@ -318,7 +318,11 @@
 function fetchNowPlaying() {
       // fetch('https://papaimediacentrum.hu/oldalak/radio/nowplaying.php')
       fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://papaimediacentrum.hu/oldalak/radio/nowplaying.php'))
-        .then(response => response.json())
+        //.then(response => response.json())
+        .then(response => {
+          if (!response.ok) throw new Error('Network response not ok');
+          return response.json();
+        })
         .then(data => {
           const title = data.title || '-';
           const artist = data.artist || '';
@@ -340,7 +344,7 @@ function fetchNowPlaying() {
           //}
         })
         .catch(() => {
-          setTimeout(fetchNowPlaying, 5000); // retry after 5s
+          setTimeout(fetchNowPlaying, 3000); // retry after 3s
           //document.getElementById('trackTitle').textContent = 'Nincs adat';
           //document.getElementById('trackArtist').textContent = '';
           //document.getElementById('albumArt').src = 'https://papaimediacentrum.hu/img/radiologo2.png';
